@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ discipline.name }} - {{ block.super }}
+{% endblock %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'home' %}">Discipline</a></li>
+  <li class="breadcrumb-item active">{{ discipline.name }}</li>
+{% endblock %}
+
+{% block content %}
+ <div class="mb-4">
+    <a href="{% url 'new_idea' discipline.pk %}" class="btn btn-primary">Add Idea</a>
+  </div>
+  <table class="table">
+    <thead class="thead-inverse">
+      <tr>
+        <th>Idea</th>
+        <th>Starter</th>
+        <th>Replies</th>
+        <th>Views</th>
+        <th>Last Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for idea in discipline.ideas.all %}
+        <tr>
+          <td>{{ idea.subject }}</td>
+          <td>{{ idea.starter.username }}</td>
+          <td>0</td>
+          <td>0</td>
+          <td>{{ idea.last_updated }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
