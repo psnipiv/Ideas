@@ -1,10 +1,10 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.urls import resolve
-from .views import home, discipline_ideas,new_idea
-from .models import Discipline,Idea,Post
+from ..views import home, discipline_ideas,new_idea
+from ..models import Discipline,Idea,Post
 from django.contrib.auth.models import User
-from .forms import NewIdeaForm
+from ..forms import NewIdeaForm
 
 
 # Create your tests here.
