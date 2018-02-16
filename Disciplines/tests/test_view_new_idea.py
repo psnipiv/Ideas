@@ -1,68 +1,19 @@
-from django.test import TestCase
-from django.urls import reverse
-from django.urls import resolve
-from ..views import home, discipline_ideas,new_idea
-from ..models import Discipline,Idea,Post
 from django.contrib.auth.models import User
+from django.test import TestCase
+from django.urls import resolve, reverse
+
 from ..forms import NewIdeaForm
+from ..models import Discipline,Idea,Post
+from ..views import new_idea
 
 
 # Create your tests here.
-class HomeTests(TestCase):
-    def setUp(self):
-        self.discipline = Discipline.objects.create(name='Test', description='Test Description.')
-        url = reverse('home')
-        self.response = self.client.get(url)
-
-    def test_home_view_status_code(self):
-        self.assertEquals(self.response.status_code, 200)
-
-    def test_home_url_resolves_home_view(self):
-        view = resolve('/')
-        self.assertEquals(view.func, home)
-
-    def test_home_view_contains_link_to_ideas_page(self):
-        discipline_ideas_url = reverse('discipline_ideas', kwargs={'pk': self.discipline.pk})
-        self.assertContains(self.response, 'href="{0}"'.format(discipline_ideas_url))
-
-class DisciplineIdeasTests(TestCase):
-    def setUp(self):
-        Discipline.objects.create(name='Test', description='Test Section.')
-
-    def test_discipline_ideas_view_success_status_code(self):
-        url = reverse('discipline_ideas', kwargs={'pk': 1})
-        response = self.client.get(url)
-        self.assertEquals(response.status_code, 200)
-
-    def test_discipline_ideas_view_not_found_status_code(self):
-        url = reverse('discipline_ideas', kwargs={'pk': 99})
-        response = self.client.get(url)
-        self.assertEquals(response.status_code, 404)
-
-    def test_board_topics_url_resolves_board_topics_view(self):
-        view = resolve('/disciplines/1/')
-        self.assertEquals(view.func, discipline_ideas)
-
-    def test_board_topics_view_contains_link_back_to_homepage(self):
-        discipline_ideas_url = reverse('discipline_ideas', kwargs={'pk': 1})
-        response = self.client.get(discipline_ideas_url)
-        homepage_url = reverse('home')
-        self.assertContains(response, 'href="{0}"'.format(homepage_url))
-
-    def test_board_topics_view_contains_navigation_links(self):
-        discipline_ideas_url = reverse('discipline_ideas', kwargs={'pk': 1})
-        homepage_url = reverse('home')
-        new_idea_url = reverse('new_idea', kwargs={'pk': 1})
-
-        response = self.client.get(discipline_ideas_url)
-
-        self.assertContains(response, 'href="{0}"'.format(homepage_url))
-        self.assertContains(response, 'href="{0}"'.format(new_idea_url))
 
 class NewIdeaTests(TestCase):
     def setUp(self):
         Discipline.objects.create(name='Test', description='Test Description.')
         User.objects.create_user(username='john', email='john@doe.com', password='123')  # <- included this line here
+        self.client.login(username='john', password='123')
 
     def test_new_idea_view_success_status_code(self):
         url = reverse('new_idea', kwargs={'pk': 1})
@@ -139,3 +90,13 @@ class NewIdeaTests(TestCase):
         form = response.context.get('form')
         self.assertEquals(response.status_code, 200)
         self.assertTrue(form.errors)
+
+class LoginRequiredNewTopicTests(TestCase):
+    def setUp(self):
+        Discipline.objects.create(name='Test', description='Test Description')
+        self.url = reverse('new_idea', kwargs={'pk': 1})
+        self.response = self.client.get(self.url)
+
+    def test_redirection(self):
+        login_url = reverse('login')
+        self.assertRedirects(self.response, '{login_url}?next={url}'.format(login_url=login_url, url=self.url))

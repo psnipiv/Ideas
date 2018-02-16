@@ -53,5 +53,8 @@ urlpatterns = [
 
     url(r'^disciplines/(?P<pk>\d+)/$', views.discipline_ideas, name='discipline_ideas'),
     url(r'^disciplines/(?P<pk>\d+)/new/$', views.new_idea, name='new_idea'),
+    url(r'^disciplines/(?P<pk>\d+)/ideas/(?P<idea_pk>\d+)/$', views.idea_posts, name='idea_posts'),
+    url(r'^disciplines/(?P<pk>\d+)/ideas/(?P<idea_pk>\d+)/reply/$', views.reply_idea, name='reply_idea'),
+    url(r'^disciplines/(?P<pk>\d+)/ideas/(?P<idea_pk>\d+)/posts/(?P<post_pk>\d+)/edit/$',views.PostUpdateView.as_view(), name='edit_post'),
     url(r'^admin/', admin.site.urls),
 ]

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Idea
+from .models import Idea,Post
 
 class NewIdeaForm(forms.ModelForm):
     subject = forms.CharField(label='Idea',
@@ -21,3 +21,8 @@ class NewIdeaForm(forms.ModelForm):
     class Meta:
         model = Idea
         fields = ['subject','message']
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['message', ]
