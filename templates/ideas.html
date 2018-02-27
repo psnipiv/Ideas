@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load humanize %}
+
 {% block title %}
   {{ discipline.name }} - {{ block.super }}
 {% endblock %}
@@ -13,7 +15,7 @@
  <div class="mb-4">
     <a href="{% url 'new_idea' discipline.pk %}" class="btn btn-primary">Add Idea</a>
   </div>
-  <table class="table">
+  <table class="table table-striped mb-4">
     <thead class="thead-inverse">
       <tr>
         <th>Idea</th>
@@ -25,14 +27,31 @@
     </thead>
     <tbody>
       {% for idea in ideas %}
+        {% url 'idea_posts' discipline.pk idea.pk as idea_url %}
         <tr>
-			<td><a href="{% url 'idea_posts' discipline.pk idea.pk %}">{{ idea.subject }}</a></td>
-			<td>{{ idea.starter.username }}</td>
-			<td>{{ idea.replies }}</td>
-			<td>{{ idea.views }}</td> 
-			<td>{{ idea.last_updated }}</td>
-  </tr>
+          <td>
+            <p class="mb-0">
+              <a href="{{ idea_url }}">{{ idea.subject }}</a>
+            </p>
+            <small class="text-muted">
+              Pages:
+              {% for i in idea.get_page_range %}
+                <a href="{{ idea_url }}?page={{ i }}">{{ i }}</a>
+              {% endfor %}
+              {% if idea.has_many_pages %}
+              ... <a href="{{ idea_url }}?page={{ idea.get_page_count }}">Last Page</a>
+              {% endif %}
+            </small>
+          </td>
+          <td class="align-middle">{{ idea.starter.username }}</td>
+          <td class="align-middle">{{ idea.replies }}</td>
+          <td class="align-middle">{{ idea.views }}</td>
+          <td class="align-middle">{{ idea.last_updated|naturaltime }}</td>
+        </tr>
       {% endfor %}
     </tbody>
   </table>
+  
+	{% include 'includes/pagination.html' %}
+
 {% endblock %}

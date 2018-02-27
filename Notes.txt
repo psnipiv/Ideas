@@ -1,0 +1,26 @@
+Always run the .bat file as Administrator.
+Modify the path in Run.bat
+
+Pre-requisite before executing run.bat
+
+#Use pip, a tool to manage and install Python packages, to install virtualenv.
+pip install virtualenv
+
+# Navigate to the project folder in Command line. venv is the folder name for virtual packages
+virtualenv venv
+
+#To Activate the virtual environment
+venv\Scripts\activate
+
+#To Deactivate the virtual environment
+venv\Scripts\deactivate.bat
+
+#For Migration 
+#Open the Command Line Tools, activate the virtual environment, go to the folder where the manage.py file is, and run the commands below:
+python manage.py makemigrations
+python manage.py sqlmigrate #FolderName# 0001
+python manage.py migrate
+
+
+#To Create Adminstrator account
+python manage.py createsuperuser

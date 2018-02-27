@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import resolve, reverse
 from django.contrib.auth.models import User
 from ..models import Discipline
-from ..views import home
+from ..views import DisciplineListView
 
 
 class HomeTests(TestCase):
@@ -18,7 +18,7 @@ class HomeTests(TestCase):
 
     def test_home_url_resolves_home_view(self):
         view = resolve('/')
-        self.assertEquals(view.func, home)
+        self.assertEquals(view.func.view_class, DisciplineListView)
 
     def test_home_view_contains_link_to_ideas_page(self):
         discipline_ideas_url = reverse('discipline_ideas', kwargs={'pk': self.discipline.pk})

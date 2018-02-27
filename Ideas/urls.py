@@ -20,9 +20,8 @@ from Disciplines import views
 from django.contrib.auth import views as auth_views
 from accounts import views as accounts_views
 
-
 urlpatterns = [
-    url(r'^$', views.home, name='home'),
+    url(r'^$', views.DisciplineListView.as_view(), name='home'),
     url(r'^signup/$', accounts_views.signup, name='signup'),
     url(r'^login/$', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     url(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
@@ -44,16 +43,17 @@ urlpatterns = [
     url(r'^reset/complete/$',
         auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'),
         name='password_reset_complete'),
-        
+    
+    url(r'^settings/account/$', accounts_views.UserUpdateView.as_view(), name='my_account'),    
     url(r'^settings/password/$', auth_views.PasswordChangeView.as_view(template_name='password_change.html'),
     name='password_change'),
     url(r'^settings/password/done/$', auth_views.PasswordChangeDoneView.as_view(template_name='password_change_done.html'),
     name='password_change_done'),
 
 
-    url(r'^disciplines/(?P<pk>\d+)/$', views.discipline_ideas, name='discipline_ideas'),
+    url(r'^disciplines/(?P<pk>\d+)/$', views.IdeaListView.as_view(), name='discipline_ideas'),
     url(r'^disciplines/(?P<pk>\d+)/new/$', views.new_idea, name='new_idea'),
-    url(r'^disciplines/(?P<pk>\d+)/ideas/(?P<idea_pk>\d+)/$', views.idea_posts, name='idea_posts'),
+    url(r'^disciplines/(?P<pk>\d+)/ideas/(?P<idea_pk>\d+)/$', views.PostListView.as_view(), name='idea_posts'),
     url(r'^disciplines/(?P<pk>\d+)/ideas/(?P<idea_pk>\d+)/reply/$', views.reply_idea, name='reply_idea'),
     url(r'^disciplines/(?P<pk>\d+)/ideas/(?P<idea_pk>\d+)/posts/(?P<post_pk>\d+)/edit/$',views.PostUpdateView.as_view(), name='edit_post'),
     url(r'^admin/', admin.site.urls),
