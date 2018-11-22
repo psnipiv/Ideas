@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 from decouple import config,Csv
 import dj_database_url
+import django_heroku
 
 import os
 
@@ -161,3 +162,6 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
