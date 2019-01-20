@@ -7,4 +7,3 @@ pyodbc==4.0.22
 python-decouple==3.1
 pytz==2018.3
 gunicorn
-django-heroku
