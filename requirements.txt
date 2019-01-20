@@ -1,5 +1,5 @@
 dj-database-url==0.4.2
-Django==2.0.2
+django>=2.0.10
 django-pyodbc-azure==2.0.1.0
 django-widget-tweaks==1.4.1
 Markdown==2.6.11
