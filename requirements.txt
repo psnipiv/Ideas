@@ -7,3 +7,5 @@ python-decouple
 pytz
 gunicorn
 django_heroku
+unixodbc-dev[el]
+pyodbc
