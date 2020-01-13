@@ -7,4 +7,4 @@ python-decouple
 pytz
 gunicorn
 django_heroku
-pyodbc
+pypyodbc
