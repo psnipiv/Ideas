@@ -2,10 +2,10 @@ dj-database-url
 django
 django-pyodbc-azure
 django-widget-tweaks
-unixodbc-dev
 Markdown
-pyodbc
 python-decouple
 pytz
 gunicorn
 django_heroku
+unixodbc-dev
+pyodbc
