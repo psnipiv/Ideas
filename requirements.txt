@@ -2,6 +2,7 @@ dj-database-url
 django
 django-pyodbc-azure
 django-widget-tweaks
+unixodbc 
 unixodbc-dev
 Markdown
 pyodbc
