@@ -33,25 +33,25 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
-#DATABASES = {
-#    'default': dj_database_url.config(
-#        default=config('DATABASE_URL')
-#    )
-#}
 DATABASES = {
-    'default': {
-        'ENGINE': 'sql_server.pyodbc',
-        'NAME': 'ProjectIdeas',
-        'USER': 'sa',
-        'PASSWORD': 'P@ss1234',
-        'HOST': 'LAPTOP-8O7S4PV2',
-        'PORT': '',
-
-        'OPTIONS': {
-            'driver': 'ODBC Driver 13 for SQL Server',
-        },
-    },
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
 }
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'sql_server.pyodbc',
+#        'NAME': 'ProjectIdeas',
+#        'USER': 'sa',
+#        'PASSWORD': 'P@ss1234',
+#        'HOST': 'LAPTOP-8O7S4PV2',
+#        'PORT': '',
+#
+#        'OPTIONS': {
+#            'driver': 'ODBC Driver 13 for SQL Server',
+#        },
+#    },
+#}
 
 # set this to False if you want to turn off pyodbc's connection pooling
 DATABASE_CONNECTION_POOLING = False
