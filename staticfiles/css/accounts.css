@@ -1,0 +1,16 @@
+body {
+  background-image: url(../img/logo_x_pattern.png);
+}
+
+.logo {
+  font-family: 'Monoton', cursive;
+}
+
+.logo a {
+  color: rgba(0,0,0,.9);
+}
+
+.logo a:hover,
+.logo a:active {
+  text-decoration: none;
+}
