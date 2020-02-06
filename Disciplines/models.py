@@ -8,7 +8,8 @@ from markdown import markdown
 
 
 class Discipline(models.Model):
-    name = models.CharField(max_length=30, unique=True)
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=30, null=True)
     description = models.CharField(max_length=255)
     
     def __str__(self):
