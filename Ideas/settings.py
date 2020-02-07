@@ -28,30 +28,19 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
 
-ALLOWED_HOSTS = ['brainyideas.herokuapp.com']
 
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+
+# Database
+# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 DATABASES = {
     'default': dj_database_url.config(
         default=config('DATABASE_URL')
     )
 }
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'sql_server.pyodbc',
-#        'NAME': 'ProjectIdeas',
-#        'USER': 'sa',
-#        'PASSWORD': 'P@ss1234',
-#        'HOST': 'LAPTOP-8O7S4PV2',
-#        'PORT': '',
-#
-#        'OPTIONS': {
-#            'driver': 'ODBC Driver 13 for SQL Server',
-#        },
-#    },
-#}
+
 
 # set this to False if you want to turn off pyodbc's connection pooling
 DATABASE_CONNECTION_POOLING = False
@@ -75,6 +64,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -104,17 +94,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Ideas.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#    }
-#}
 
 
 # Password validation
@@ -158,6 +137,11 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
