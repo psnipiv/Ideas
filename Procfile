@@ -1,1 +1,1 @@
-web: gunicorn ideas.wsgi
+web: gunicorn Ideas.wsgi
