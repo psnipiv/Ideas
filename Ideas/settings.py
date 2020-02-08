@@ -35,12 +35,14 @@ ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', 'brainyideas.herokuapp.com
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#    }
+#}
+
+DATABASES = {'default': dj_database_url.config(default=config('DATABASE_URL'))}
 
 
 # set this to False if you want to turn off pyodbc's connection pooling
@@ -65,6 +67,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -150,3 +153,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+
+# This is new
+del DATABASES['default']['OPTIONS']['sslmode']
