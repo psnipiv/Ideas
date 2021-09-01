@@ -1,5 +1,9 @@
 body {
+<<<<<<< HEAD
   background-image: url(../img/bananas.png);
+=======
+  background-image: url(../img/logo_x_pattern.png);
+>>>>>>> parent of 977dcf9 (changes to background)
 }
 
 .logo {
